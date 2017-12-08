@@ -1,0 +1,24 @@
+<h1>Coup Challenge Output</h1>
+
+<h2>Input</h2> 
+<ul>
+  <li>Scooters: <%= "#{@coup_challenge.scooters}" %></li>
+  <li>C: <%= "#{@coup_challenge.c}" %></li>
+  <li>P: <%= "#{@coup_challenge.p}" %></li>
+</ul>
+
+<hr/>
+
+<h2>Output</h2>
+  <p>For this P and C, we can at best save: <strong>
+	  <%= "#{@coup_challenge.max_engineers_can_be_saved}" %> Field Engineers</strong><p>
+  <p>For this P and C, we can at worst save: <strong>
+	  <%= "#{@coup_challenge.min_engineers_can_be_saved}" %> Field Engineers</strong></p>
+  <p><%= "For this configuration of scooters, we need at least #{@min_fe} Field Engineers" %></p>
+  <p><%= "Total number of scooters: #{@coup_challenge.total_scooters}" %></p>
+  <p><%= "Total scooters divided by P = #{@coup_challenge.total_scooters / @coup_challenge.p.to_f} [Theoretical min FE]" %></p>
+  
+  <pre>
+  	Solution Hash:
+	<%= @coup_challenge.show_solution %>
+  </pre>
