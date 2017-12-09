@@ -3,43 +3,39 @@ require 'json'
 
 class CoupChallenge
   
-  attr_accessor :scooters 
-  attr_accessor :c 
-  attr_accessor :p
+  attr_accessor :scooters, :c, :p, :solution
+  RANGE_NUM_DISTRICTS = (1..100)
+  RANGE_NUM_SCOOTERS = (0..1000)
+  RANGE_FM = (1..999)
+  RANGE_FE = (1..1000)
   
   def initialize(n = [], c = 0, p = 0)
     @scooters, @c, @p = n, c, p
     @solution = Hash.new(@scooters.length)
   end
   
+  def self.random
+    self.new(Array.new(rand(RANGE_NUM_DISTRICTS)) { rand(RANGE_NUM_SCOOTERS) }, rand(RANGE_FM), rand(RANGE_FE))
+  end
+  
   def total_scooters
     @scooters.reduce( :+ )
   end
   
-  def num_fleet_engineers(n)
-    return (n / @p.to_f).ceil
+  def num_fleet_engineers(num_scooters)
+    (num_scooters / @p.to_f).ceil
   end
   
-  def show_solution
-   JSON.pretty_generate(@solution)
+  def num_fleet_engineers_with_fm(num_scooters)
+    ([0, (num_scooters - @c)].max / @p.to_f).ceil
   end
-
+  
   def max_engineers_can_be_saved
-    return (@c / @p.to_f).ceil
-  end
-  
-  def min_engineers_can_be_saved
-    return [max_engineers_can_be_saved - 1, 0].max
+    (@c / @p.to_f).ceil
   end
 
   def number_fe_saved(num_scooters)
-    num_fe_only = (num_scooters / @p.to_f).ceil
-    num_fe_with_fm = ([0, (num_scooters - @c)].max / @p.to_f).ceil
-    return num_fe_only - num_fe_with_fm
-  end
-
-  def can_save_max?(num_scooters)
-    return max_engineers_can_be_saved(@c, @p) == number_fe_saved(num_scooters, @c, @p)
+    num_fleet_engineers(num_scooters) - num_fleet_engineers_with_fm(num_scooters)
   end
 
   def solve
@@ -57,12 +53,16 @@ class CoupChallenge
       @solution[index] = {
         num_scooters: i,
         num_fe_only: num_fe,
-        num_fe_saved: max_fe_saved
+        max_fe_saved_so_far: max_fe_saved
       }
     end
   
     return total_FE - max_fe_saved
   end
-
+  
+  def show_solution
+   JSON.pretty_generate(@solution)
+  end
+  
 end
 

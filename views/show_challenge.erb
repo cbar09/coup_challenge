@@ -1,24 +1,61 @@
-<h1>Coup Challenge Output</h1>
+<h1>Coup Challenge Interactive Form</h1>
+<form method="POST" action="/solve">
+<fieldset>
+	<p>
+		<label for="C">C - <small>number of scooters FM can maintain</small></label><br/>
+		<input type="number" name="C" min="1" max="999" step="1" style="width:100px;" placeholder="[1..999]" 
+		value="<%=@coup_challenge && @coup_challenge.c %>" required/><br/>
+	</p>
+	<p>
+		<label for="P">P - <small>number of scooters an FE can maintain</small></label><br/>
+		<input type="number" name="P" min="1" max="1000" step="1" style="width:100px;" placeholder="[1..1000]" 
+			value="<%=@coup_challenge && @coup_challenge.p %>" required /><br/>
+	</p>
+	<p>
+		<label for="scooters">Scooters - <small>int[] array of number of scooters in each Coup district in Berlin</small></label><br/>
+		<textarea type="text" name="scooters" rows="10" cols="60" placeholder="size: [1..100] | element in scooters: [0..1000] | e.g. (10, 15, 2)" required><%= @coup_challenge && @coup_challenge.scooters.to_s %></textarea><br/>
+	</p>
+	<input type="submit" value="Solve!" /> OR 
+	<a href="/random">Random!</a>
+</fieldset>
+</form>
 
-<h2>Input</h2> 
-<ul>
-  <li>Scooters: <%= "#{@coup_challenge.scooters}" %></li>
-  <li>C: <%= "#{@coup_challenge.c}" %></li>
-  <li>P: <%= "#{@coup_challenge.p}" %></li>
-</ul>
 
-<hr/>
+<h1>Coup Challenge Solution</h1>
+<% if @coup_challenge.nil? || @coup_challenge.solution.empty? %>
+	Now Click Solve!
+<% else %>
+	<h3>Input</h3>
+	<ul>
+	  <li>Scooters: <%= "#{@coup_challenge.scooters}" %></li>
+	  <li>C: <%= "#{@coup_challenge.c}" %></li>
+	  <li>P: <%= "#{@coup_challenge.p}" %></li>
+	</ul>
 
-<h2>Output</h2>
-  <p>For this P and C, we can at best save: <strong>
-	  <%= "#{@coup_challenge.max_engineers_can_be_saved}" %> Field Engineers</strong><p>
-  <p>For this P and C, we can at worst save: <strong>
-	  <%= "#{@coup_challenge.min_engineers_can_be_saved}" %> Field Engineers</strong></p>
-  <p><%= "For this configuration of scooters, we need at least #{@min_fe} Field Engineers" %></p>
-  <p><%= "Total number of scooters: #{@coup_challenge.total_scooters}" %></p>
-  <p><%= "Total scooters divided by P = #{@coup_challenge.total_scooters / @coup_challenge.p.to_f} [Theoretical min FE]" %></p>
+	<h3>Output</h3>
+		<div id="solution">
+			For this configuration of scooters, we need at least...<br/>
+			<strong><%= "#{@min_fe} Field Engineers" %></strong>
+	  </div>
+
+		<hr>
+	
+	<h3>Other Interesting Info...</h3>
+	<dl>
+		<dt>For C=<%= "#{@coup_challenge.c}" %> and P=<%= "#{@coup_challenge.p}" %> we can save at most...</dt>
+		<dd><%= "#{@coup_challenge.max_engineers_can_be_saved}" %> Field Engineers</dd><br/>
+	
+	  <dt>Total number of scooters: </dt>
+		<dd><%= "#{@coup_challenge.total_scooters}" %> scooters</dd><br/>
+		
+	  <dt>Total scooters divided by P [Theoretical min number of FE's]: </dt>
+	  <dd><%= "~#{(@coup_challenge.total_scooters / @coup_challenge.p.to_f).round(2)} FE" %></dd>
+	</dl>
   
-  <pre>
-  	Solution Hash:
-	<%= @coup_challenge.show_solution %>
-  </pre>
+	<% if development? %>
+		<pre>
+		 	Solution Hash:
+			<%= @coup_challenge.show_solution %>
+		</pre>
+	<% end %>
+<% end %>

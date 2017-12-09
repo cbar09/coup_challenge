@@ -13,14 +13,20 @@ configure :development do
 end
 
 get '/' do
-  NUM_DISTRICTS = (1..100)
-  NUM_SCOOTERS = (0..1000)
-  c = ARGV.length >= 1 ? ARGV[0].to_i : rand(1..999)
-  p = ARGV.length >= 2 ? ARGV[1].to_i : rand(1..1000)
-  n = ARGV.length >= 3 ? ARGV[2].split(',').map(&:to_i) : Array.new(rand(NUM_DISTRICTS)) { rand(NUM_SCOOTERS) }
+  @coup_challenge = nil
+  erb :show_challenge
+end
 
-  @coup_challenge = CoupChallenge.new(n, c, p)
-  @min_fe = @coup_challenge.solve
+get '/random' do
+  @coup_challenge = CoupChallenge.random
+  erb :show_challenge
+end
+
+post '/solve' do
+  scooters = params['scooters'].tr!('(){}[]', '').split(',').map(&:to_i)
   
+  @coup_challenge = CoupChallenge.new(scooters, params['C'].to_i, params['P'].to_i)
+  @min_fe = @coup_challenge.solve
+
   erb :show_challenge
 end
