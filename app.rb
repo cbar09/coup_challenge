@@ -1,7 +1,8 @@
 # myapp.rb
 require 'sinatra'
 require_relative 'coup_challenge'
-require 'better_errors'
+require 'better_errors' if development?
+require 'bundler/setup'
 
 # Just in development!
 configure :development do
