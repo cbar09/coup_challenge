@@ -11,13 +11,17 @@ class CoupChallenge
   
   def initialize(n = [], c = 0, p = 0)
     @scooters, @c, @p = n, c, p
-    @solution = Hash.new(@scooters.length)
+    @solution = Hash.new(@scooters && @scooters.length)
   end
   
   def check_inputs(scooters, c, p)
-    valid_scooters = (RANGE_NUM_DISTRICTS === @scooters.count && 
-      @scooters.all?{|s| RANGE_NUM_SCOOTERS === s})
-    
+    if scooters.nil?
+      false
+    else
+      valid_scooters = (RANGE_NUM_DISTRICTS === @scooters.count && 
+        @scooters.all?{|s| RANGE_NUM_SCOOTERS === s})
+    end
+      
     return valid_scooters && RANGE_FM === @c && RANGE_FE === @p
   end
   
@@ -72,4 +76,3 @@ class CoupChallenge
   end
   
 end
-

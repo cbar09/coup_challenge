@@ -51,8 +51,8 @@
 		  <dt>Total number of scooters: </dt>
 			<dd><%= "#{@coup_challenge.total_scooters}" %> scooters</dd><br/>
 		
-		  <dt>Total scooters divided by P [Theoretical min number of FE's]: </dt>
-		  <dd><%= "~#{(@coup_challenge.total_scooters / @coup_challenge.p.to_f).round(2)} FE" %></dd>
+		  <dt>(total_num_scooters - C) / P [Theoretical min number of FE's]: </dt>
+		  <dd><%= "~#{((@coup_challenge.total_scooters - @coup_challenge.c) / @coup_challenge.p.to_f).round(2)} FE" %></dd>
 		</dl>
   
 		<% if settings.development %>
