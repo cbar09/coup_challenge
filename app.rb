@@ -28,10 +28,24 @@ get '/random' do
 end
 
 post '/solve' do
-  scooters = params['scooters'].tr!('(){}[]', '').split(',').map(&:to_i)
   
+  begin
+    scooters = params['scooters'].tr('(){}[]', '').split(',').map(&:to_i)
+    c = params['C'].to_i
+    p = params['P'].to_i
+  rescue
+    @error = "Input variables are not valid!"
+    erb :show_challenge
+  end
+  
+  #Inputs are valid integers, we can instantiate CoupChallenge
   @coup_challenge = CoupChallenge.new(scooters, params['C'].to_i, params['P'].to_i)
-  @min_fe = @coup_challenge.solve
-
+  
+  if @coup_challenge.check_inputs(scooters, c, p)
+    @min_fe = @coup_challenge.solve
+  else
+    @error = "Input variables are not valid!"
+  end
+  
   erb :show_challenge
 end

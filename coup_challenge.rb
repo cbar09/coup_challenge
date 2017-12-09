@@ -14,6 +14,13 @@ class CoupChallenge
     @solution = Hash.new(@scooters.length)
   end
   
+  def check_inputs(scooters, c, p)
+    valid_scooters = (RANGE_NUM_DISTRICTS === @scooters.count && 
+      @scooters.all?{|s| RANGE_NUM_SCOOTERS === s})
+    
+    return valid_scooters && RANGE_FM === @c && RANGE_FE === @p
+  end
+  
   def self.random
     self.new(Array.new(rand(RANGE_NUM_DISTRICTS)) { rand(RANGE_NUM_SCOOTERS) }, rand(RANGE_FM), rand(RANGE_FE))
   end

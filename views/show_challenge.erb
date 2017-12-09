@@ -22,40 +22,44 @@
 
 
 <h1>Coup Challenge Solution</h1>
-<% if @coup_challenge.nil? || @coup_challenge.solution.empty? %>
-	Now Click Solve!
+<% unless @error.nil? %>
+	<p>Warning: Input variables are NOT valid!</p>
 <% else %>
-	<h3>Input</h3>
-	<ul>
-	  <li>Scooters: <%= "#{@coup_challenge.scooters}" %></li>
-	  <li>C: <%= "#{@coup_challenge.c}" %></li>
-	  <li>P: <%= "#{@coup_challenge.p}" %></li>
-	</ul>
+	<% if @coup_challenge.nil? || @coup_challenge.solution.empty? %>
+		Now Click Solve!
+	<% else %>
+		<h3>Input</h3>
+		<ul>
+		  <li>Scooters: <%= "#{@coup_challenge.scooters}" %></li>
+		  <li>C: <%= "#{@coup_challenge.c}" %></li>
+		  <li>P: <%= "#{@coup_challenge.p}" %></li>
+		</ul>
 
-	<h3>Output</h3>
+		<h3>Output</h3>
 	
-	<div id="solution">
-		For this configuration of scooters, we need at least...<br/>
-		<strong><%= "#{@min_fe} Field Engineers" %></strong>
-	</div>
-	<hr>
+		<div id="solution">
+			For this configuration of scooters, we need at least...<br/>
+			<strong><%= "#{@min_fe} Field Engineers" %></strong>
+		</div>
+		<hr>
 	
-	<h3>Other Interesting Info...</h3>
-	<dl>
-		<dt>For C=<%= "#{@coup_challenge.c}" %> and P=<%= "#{@coup_challenge.p}" %> we can save at most...</dt>
-		<dd><%= "#{@coup_challenge.max_engineers_can_be_saved}" %> Field Engineers</dd><br/>
+		<h3>Other Interesting Info...</h3>
+		<dl>
+			<dt>For C=<%= "#{@coup_challenge.c}" %> and P=<%= "#{@coup_challenge.p}" %> we can save at most...</dt>
+			<dd><%= "#{@coup_challenge.max_engineers_can_be_saved}" %> Field Engineers</dd><br/>
 	
-	  <dt>Total number of scooters: </dt>
-		<dd><%= "#{@coup_challenge.total_scooters}" %> scooters</dd><br/>
+		  <dt>Total number of scooters: </dt>
+			<dd><%= "#{@coup_challenge.total_scooters}" %> scooters</dd><br/>
 		
-	  <dt>Total scooters divided by P [Theoretical min number of FE's]: </dt>
-	  <dd><%= "~#{(@coup_challenge.total_scooters / @coup_challenge.p.to_f).round(2)} FE" %></dd>
-	</dl>
+		  <dt>Total scooters divided by P [Theoretical min number of FE's]: </dt>
+		  <dd><%= "~#{(@coup_challenge.total_scooters / @coup_challenge.p.to_f).round(2)} FE" %></dd>
+		</dl>
   
-	<% if settings.development %>
-		<pre>
-		 	Solution Hash:
-			<%= @coup_challenge.show_solution %>
-		</pre>
+		<% if settings.development %>
+			<pre>
+			 	Solution Hash:
+				<%= @coup_challenge.show_solution %>
+			</pre>
+		<% end %>
 	<% end %>
 <% end %>
