@@ -33,12 +33,12 @@
 	</ul>
 
 	<h3>Output</h3>
-		<div id="solution">
-			For this configuration of scooters, we need at least...<br/>
-			<strong><%= "#{@min_fe} Field Engineers" %></strong>
-	  </div>
-
-		<hr>
+	
+	<div id="solution">
+		For this configuration of scooters, we need at least...<br/>
+		<strong><%= "#{@min_fe} Field Engineers" %></strong>
+	</div>
+	<hr>
 	
 	<h3>Other Interesting Info...</h3>
 	<dl>
@@ -52,8 +52,7 @@
 	  <dd><%= "~#{(@coup_challenge.total_scooters / @coup_challenge.p.to_f).round(2)} FE" %></dd>
 	</dl>
   
-	<%= raise "here" %>
-	<% if development? %>
+	<% if @development %>
 		<pre>
 		 	Solution Hash:
 			<%= @coup_challenge.show_solution %>

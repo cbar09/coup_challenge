@@ -14,6 +14,7 @@ configure :development do
   # you need to set the application root in order to abbreviate filenames
   # within the application:
   BetterErrors.application_root = File.expand_path('~/coup_challenge', __FILE__)
+  @development = true
 end
 
 get '/' do
@@ -22,7 +23,6 @@ get '/' do
 end
 
 get '/random' do
-  raise "here"
   @coup_challenge = CoupChallenge.random
   erb :show_challenge
 end
