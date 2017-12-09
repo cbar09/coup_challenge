@@ -52,7 +52,7 @@
 	  <dd><%= "~#{(@coup_challenge.total_scooters / @coup_challenge.p.to_f).round(2)} FE" %></dd>
 	</dl>
   
-	<% if @development %>
+	<% if settings.development %>
 		<pre>
 		 	Solution Hash:
 			<%= @coup_challenge.show_solution %>
