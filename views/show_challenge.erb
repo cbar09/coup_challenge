@@ -54,12 +54,4 @@
 		  <dt>(total_num_scooters - C) / P [Theoretical min number of FE's]: </dt>
 		  <dd><%= "~#{((@coup_challenge.total_scooters - @coup_challenge.c) / @coup_challenge.p.to_f).round(2)} FE" %></dd>
 		</dl>
-  
-		<% if defined? settings.development && settings.development %>
-			<pre>
-			 	Solution Hash:
-				<%= @coup_challenge.show_solution %>
-			</pre>
-		<% end %>
-	<% end %>
 <% end %>

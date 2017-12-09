@@ -15,7 +15,6 @@ configure :development do
   # you need to set the application root in order to abbreviate filenames
   # within the application:
   BetterErrors.application_root = File.expand_path('~/coup_challenge', __FILE__)
-  set :development, true
 end
 
 before do
