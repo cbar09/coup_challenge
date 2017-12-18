@@ -6,7 +6,8 @@ Find Number of Fleet Engineers
 git clone https://github.com/cbar09/coup_challenge.git
 cd coup_challenge
 bundle install
-ruby app.rb
+ruby ruby tc_coup_challenge.rb #run local unit tests
+ruby app.rb #start sinatra app
 ```
 
 ### Live Demo:
