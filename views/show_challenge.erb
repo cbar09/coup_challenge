@@ -25,7 +25,7 @@
 <% unless @error.nil? %>
 	<p>Warning: Input variables are NOT valid!</p>
 <% else %>
-	<% if @coup_challenge.nil? || @coup_challenge.solution.empty? %>
+	<% if @coup_challenge.nil? || !(defined? @min_fe) %>
 		Now Click Solve!
 	<% else %>
 		<h3>Input</h3>
@@ -33,6 +33,9 @@
 		  <li>Scooters: <%= "#{@coup_challenge.scooters}" %></li>
 		  <li>C: <%= "#{@coup_challenge.c}" %></li>
 		  <li>P: <%= "#{@coup_challenge.p}" %></li>
+			<li>--- Derived Inputs ----</li>
+			<li>Total number of districts: <%= "#{@coup_challenge.number_districts}" %></li>
+			<li>Total number of scooters: <%= "#{@coup_challenge.total_scooters}" %></li>
 		</ul>
 
 		<h3>Output</h3>
@@ -53,6 +56,12 @@
 		
 		  <dt>(total_num_scooters - C) / P [Theoretical min number of FE's]: </dt>
 		  <dd><%= "~#{((@coup_challenge.total_scooters - @coup_challenge.c) / @coup_challenge.p.to_f).round(2)} FE" %></dd>
+			
+		  <dt>FE's by district: </dt>
+		  <dd>
+				Total fleet engineers only by district: <%= "#{@coup_challenge.scooters.map{|s| @coup_challenge.num_fleet_engineers(s)}} | Sum: #{@coup_challenge.total_fe_without_fm}" %><br/>
+				Number FE can be saved by district: <%= "#{@coup_challenge.scooters.map{|s| @coup_challenge.number_fe_saved(s)}} | Max: #{@coup_challenge.max_actual_saved}" %>
+			</dd>
 		</dl>
 	<% end %>
 <% end %>

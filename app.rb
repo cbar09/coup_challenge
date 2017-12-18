@@ -43,9 +43,9 @@ post '/solve' do
   end
   
   #Inputs are valid integers, we can instantiate CoupChallenge
-  @coup_challenge = CoupChallenge.new(scooters, params['C'].to_i, params['P'].to_i)
+  @coup_challenge = CoupChallenge.new(scooters: scooters, c: params['C'].to_i, p: params['P'].to_i)
   
-  if @coup_challenge.check_inputs(scooters, c, p)
+  if @coup_challenge.check_inputs
     @min_fe = @coup_challenge.solve
   else
     @error = "Input variables are not valid!"
@@ -69,9 +69,9 @@ post '/solve.json' do
   end
   
   #Inputs are valid integers, we can instantiate CoupChallenge
-  @coup_challenge = CoupChallenge.new(scooters, params['C'].to_i, params['P'].to_i)
+  @coup_challenge = CoupChallenge.new(scooters: scooters, c: params['C'].to_i, p: params['P'].to_i)
   
-  if @coup_challenge.check_inputs(scooters, c, p)
+  if @coup_challenge.check_inputs
     @min_fe = @coup_challenge.solve
     content_type :json
     {fleet_engineers: @min_fe}.to_json
